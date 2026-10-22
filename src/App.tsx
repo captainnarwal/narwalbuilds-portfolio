@@ -4,10 +4,17 @@ import remarkGfm from 'remark-gfm'
 import { ArrowUpRight, Menu, X } from 'lucide-react'
 import { posts } from './posts'
 
-// TODO: replace with your real email and LinkedIn URL
-const EMAIL = 'mailto:hello@narwalbuilds.in'
+const EMAIL = 'mailto:neerajnarwal2000@gmail.com'
 const GITHUB = 'https://github.com/captainnarwal'
-const LINKEDIN = 'https://linkedin.com/'
+const LINKEDIN = 'https://linkedin.com/in/captainnarwal'
+
+const STACK = {
+  Languages: ['Python', 'JavaScript', 'TypeScript', 'C/C++'],
+  Frontend: ['React', 'Next.js', 'HTML', 'CSS', 'Tailwind CSS'],
+  Backend: ['Node.js', 'Express', 'Django', 'Flask'],
+  Databases: ['MongoDB', 'PostgreSQL', 'MySQL', 'Redis'],
+  Tools: ['Git', 'GitHub', 'Docker', 'Linux', 'VS Code', 'Postman'],
+}
 
 export default function App() {
   const [selectedPost, setSelectedPost] = useState<string | null>(null)
@@ -52,8 +59,8 @@ export default function App() {
           </h1>
 
           <p className="hero-copy">
-            Software developer and engineer exploring software,
-            data, automation, and hands-on engineering projects.
+            Software developer building applications with Python and
+            JavaScript, with a focus on AI, backend systems, and automation.
           </p>
 
           <div className="hero-actions">
@@ -75,8 +82,21 @@ export default function App() {
           <p className="section-copy">
             I enjoy taking ideas from concept to implementation:
             designing systems, writing code, solving practical problems,
-            and documenting what I learn along the way.
+            and documenting what I learn along the way. Currently focused on
+            AI applications, backend development, full-stack projects, and
+            system design.
           </p>
+
+          <div className="stack">
+            {Object.entries(STACK).map(([group, items]) => (
+              <div key={group}>
+                <span className="project-number">{group.toUpperCase()}</span>
+                <div className="tags">
+                  {items.map((item) => <span key={item}>{item}</span>)}
+                </div>
+              </div>
+            ))}
+          </div>
         </section>
 
         <section id="projects" className="section">
@@ -84,14 +104,22 @@ export default function App() {
           <h2>Things I've been building.</h2>
 
           <div className="project-grid">
-            <article className="project-card">
+            <a
+              className="project-card"
+              href="https://wheelstop.in"
+              target="_blank"
+              rel="noreferrer"
+            >
               <span className="project-number">PROJECT / 01</span>
-              <h3>WheelStop</h3>
-              <p>A marketplace concept for discovering and listing wheels.</p>
+              <h3>WheelStop <ArrowUpRight size={20} /></h3>
+              <p>
+                A searchable marketplace for alloy wheel buyers and sellers in
+                India, with filters for fitment, size, PCD, offset, and brand.
+              </p>
               <div className="tags">
                 <span>React</span><span>FastAPI</span><span>PostgreSQL</span>
               </div>
-            </article>
+            </a>
 
             <article className="project-card">
               <span className="project-number">PROJECT / 02</span>

@@ -60,13 +60,36 @@ h1 span { color: var(--accent); }
 .text-button { background: none; color: var(--accent); border: 0; padding: 10px 0; cursor: pointer; }
 .contact { padding: 75px 0; border-top: 1px solid var(--line); }
 footer { border-top: 1px solid var(--line); padding: 26px 0; display: flex; justify-content: space-between; color: var(--muted); font-size: 12px; }
+.project-card { display: block; transition: border-color .2s; }
+a.project-card:hover { border-color: var(--accent); }
+.project-card h3 svg { vertical-align: -3px; color: var(--accent); }
+.stack { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-top: 36px; }
+.stack .tags { margin-top: 10px; }
+.post-content { overflow-wrap: anywhere; }
+.post-content table { display: block; overflow-x: auto; }
+.post-content img { max-width: 100%; height: auto; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.socials, footer { flex-wrap: wrap; gap: 12px 24px; }
+@media (min-width: 1200px) {
+  .site-shell { max-width: 1200px; }
+}
+@media (max-width: 900px) {
+  .nav-links { gap: 20px; }
+  .hero { padding: 90px 0 80px; }
+  .section { padding: 52px 0; }
+}
 @media (max-width: 650px) {
   .site-shell { padding: 0 20px; }
-  .menu-button { display: block; }
-  .nav { position: relative; }
-  .nav-links { display: none; position: absolute; z-index: 2; top: 65px; left: 0; right: 0; padding: 22px; background: #15161a; border: 1px solid var(--line); flex-direction: column; gap: 22px; }
+  .menu-button { display: grid; place-items: center; width: 44px; height: 44px; margin-right: -10px; }
+  .nav { position: relative; min-height: 70px; height: auto; }
+  .nav-links { display: none; position: absolute; z-index: 2; top: 100%; left: 0; right: 0; padding: 22px; background: #15161a; border: 1px solid var(--line); flex-direction: column; gap: 22px; }
   .nav-links.open { display: flex; }
-  .hero { padding: 85px 0; }
-  h1 { letter-spacing: -3px; }
+  .hero { padding: 64px 0; }
+  h1 { font-size: clamp(40px, 13vw, 54px); letter-spacing: -2px; }
+  .hero-copy, .section-copy { font-size: 16px; line-height: 1.8; }
   .project-grid { grid-template-columns: 1fr; }
+  .project-card { padding: 22px; }
+  .section { padding: 44px 0; }
+  .contact { padding: 56px 0; }
+  .button { padding: 14px 18px; }
 }
