@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  font-family: 'DM Sans', sans-serif;
+  color: #f2f2f2;
+  background: #0b0c0e;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+  --muted: #92959e;
+  --line: #292b30;
+  --accent: #b9f36a;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; }
+.site-shell { max-width: 1100px; margin: auto; padding: 0 28px; }
+.nav { height: 82px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); }
+.brand { font: 700 28px 'Space Grotesk'; letter-spacing: -2px; }
+.brand span { color: var(--accent); }
+.nav-links { display: flex; gap: 30px; color: var(--muted); font-size: 14px; }
+.nav-links a:hover, footer a:hover { color: var(--accent); }
+.menu-button { display: none; color: white; background: none; border: 0; }
+.hero { padding: 115px 0 105px; max-width: 780px; }
+.eyebrow, .section-label, .project-number { color: var(--muted); font-size: 11px; letter-spacing: 1.8px; }
+.eyebrow { display: flex; align-items: center; gap: 10px; }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
+h1 { font-size: clamp(54px, 9vw, 94px); line-height: 1.03; letter-spacing: -5px; margin: 30px 0 24px; }
+h1 span { color: var(--accent); }
+.hero-copy, .section-copy { color: var(--muted); font-size: 17px; line-height: 1.9; max-width: 600px; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 32px 0; }
+.button { display: inline-flex; align-items: center; gap: 10px; padding: 13px 18px; border-radius: 7px; font-size: 14px; font-weight: 600; }
+.primary { background: var(--accent); color: #11140c; }
+.secondary { border: 1px solid var(--line); }
+.socials { display: flex; gap: 24px; color: var(--muted); font-size: 13px; }
+.socials a { display: flex; align-items: center; gap: 8px; }
+.section { padding: 65px 0; border-top: 1px solid var(--line); }
+.section h2, .contact h2 { font-size: clamp(28px, 5vw, 43px); letter-spacing: -1.5px; margin: 20px 0; }
+.project-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 30px; }
+.project-card { border: 1px solid var(--line); border-radius: 12px; padding: 28px; background: #101114; }
+.project-card h3 { font-size: 24px; }
+.project-card p, .post-description { color: var(--muted); line-height: 1.8; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.tags span { border: 1px solid var(--line); color: var(--muted); border-radius: 20px; padding: 5px 10px; font-size: 11px; }
+.post-list { margin-top: 20px; }
+.post-row { display: flex; justify-content: space-between; align-items: center; text-align: left; gap: 20px; width: 100%; padding: 22px 0; color: white; background: none; border: 0; border-bottom: 1px solid var(--line); cursor: pointer; }
+.post-row > span { display: grid; gap: 8px; }
+.post-row strong { font: 600 20px 'Space Grotesk'; }
+.post-row:hover strong { color: var(--accent); }
+.post-date { color: var(--muted); font-size: 12px; }
+.post-description { font-size: 14px; }
+.post-content { max-width: 720px; line-height: 1.9; color: #d1d2d6; }
+.post-content h1, .post-content h2, .post-content h3 { letter-spacing: -1px; }
+.post-content pre { overflow-x: auto; background: #15161a; padding: 18px; border-radius: 8px; }
+.post-content code { font-size: .9em; }
+.post-content a { color: var(--accent); text-decoration: underline; }
+.text-button { background: none; color: var(--accent); border: 0; padding: 10px 0; cursor: pointer; }
+.contact { padding: 75px 0; border-top: 1px solid var(--line); }
+footer { border-top: 1px solid var(--line); padding: 26px 0; display: flex; justify-content: space-between; color: var(--muted); font-size: 12px; }
+@media (max-width: 650px) {
+  .site-shell { padding: 0 20px; }
+  .menu-button { display: block; }
+  .nav { position: relative; }
+  .nav-links { display: none; position: absolute; z-index: 2; top: 65px; left: 0; right: 0; padding: 22px; background: #15161a; border: 1px solid var(--line); flex-direction: column; gap: 22px; }
+  .nav-links.open { display: flex; }
+  .hero { padding: 85px 0; }
+  h1 { letter-spacing: -3px; }
+  .project-grid { grid-template-columns: 1fr; }
+}
