@@ -54,7 +54,8 @@ h1 span { color: var(--accent); }
 .hero-copy, .section-copy { font-size: 18px; line-height: 1.55; max-width: 36em; }
 .hero-copy { margin-top: 32px; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 32px 0; }
-.socials { display: flex; flex-wrap: wrap; gap: 12px 28px; color: var(--muted); font-size: 18px; }
+.socials { display: flex; flex-wrap: wrap; gap: 12px 24px; color: var(--muted);  }
+.socials a { display: inline-flex; align-items: center; gap: 8px; }
 .socials a:hover { color: var(--accent); }
 
 .readout { background: var(--surface); width: 100%; }
@@ -91,7 +92,7 @@ h1 span { color: var(--accent); }
 .job.featured .tags span { background: rgba(11, 12, 14, .14); }
 .job.featured .job-arrow { color: #0b0c0e; }
 .stars { color: var(--accent); }
-.parts-bin { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; margin-top: 40px; font-size: 18px; }
+.parts-bin { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin-top: 40px; font-size: 18px; }
 .parts-bin > h3 { margin: 0; }
 .parts-bin a { color: var(--muted); }
 .parts-bin a:hover { color: var(--accent); }

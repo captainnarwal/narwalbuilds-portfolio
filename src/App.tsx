@@ -4,6 +4,15 @@ import remarkGfm from 'remark-gfm'
 import { ArrowUpRight, Menu, X } from 'lucide-react'
 import { posts } from './posts'
 
+const icon = (d: string) => (
+  <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d={d} /></svg>
+)
+const ICONS = {
+  GitHub: icon('M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2 0-.4-.5-1.6.2-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.6.2 2.8.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.200v3.300c0 .3.2.7.8.6A12 12 0 0 0 12 .3'),
+  LinkedIn: icon('M20.4 20.500h-3.600v-5.600c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.900v5.700H9.400V9h3.400v1.600c.5-.9 1.6-1.8 3.4-1.8 3.6 0 4.3 2.4 4.3 5.500zM5.3 7.400a2.1 2.1 0 1 1 0-4.1 2.1 2.1 0 0 1 0 4.100m1.8 13.100H3.600V9h3.600zM22.2 0H1.800C.8 0 0 .8 0 1.700v20.600c0 .9.8 1.7 1.8 1.700h20.400c1 0 1.8-.8 1.8-1.700V1.700C24 .8 23.2 0 22.2 0'),
+  Instagram: icon('M12 2.200c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.800s0 3.6-.1 4.800c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.900C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.800C2.4 3.9 4 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.200M12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.900c.2 4.4 2.6 6.8 7 7C8.3 24 8.7 24 12 24s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.900s0-3.7-.1-4.900c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0m0 5.800a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.400M12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8m6.4-11.800a1.4 1.4 0 1 0 0 2.9 1.4 1.4 0 0 0 0-2.9'),
+}
+
 const EMAIL = 'mailto:neerajnarwal2000@gmail.com'
 const GITHUB = 'https://github.com/captainnarwal'
 const LINKEDIN = 'https://linkedin.com/in/captainnarwal'
@@ -143,9 +152,9 @@ export default function App() {
             </div>
 
             <div className="socials">
-              <a href={GITHUB} target="_blank" rel="noreferrer">GitHub ↗</a>
-              <a href={LINKEDIN} target="_blank" rel="noreferrer">LinkedIn ↗</a>
-              <a href={INSTAGRAM} target="_blank" rel="noreferrer">Instagram ↗</a>
+              <a href={GITHUB} target="_blank" rel="noreferrer" aria-label="GitHub">{ICONS.GitHub}</a>
+              <a href={LINKEDIN} target="_blank" rel="noreferrer" aria-label="LinkedIn">{ICONS.LinkedIn}</a>
+              <a href={INSTAGRAM} target="_blank" rel="noreferrer" aria-label="Instagram">{ICONS.Instagram}</a>
             </div>
           </div>
 
