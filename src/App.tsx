@@ -27,9 +27,9 @@ const STACK = {
 }
 
 const FEATURED = [
-  { name: 'WheelStop', url: 'https://wheelstop.in', stars: 0,
-    desc: 'A searchable marketplace for alloy wheel buyers and sellers in India, with filters for fitment, size, PCD, offset, and brand.',
-    tags: ['React', 'FastAPI', 'PostgreSQL'] },
+  { name: 'WheelStop', url: 'https://wheelstop.in', stars: 0, logo: '/wheelstop.svg',
+    desc: 'My business: buy and sell alloy wheels anywhere in India. No commission, ever.',
+    tags: ['My business', 'Marketplace'] },
   { name: 'OBD Analyzer', url: 'https://github.com/captainnarwal/OBD-Anlayzer', stars: 1,
     desc: 'Plug in, read the codes, see what the car is telling you. A simple app to analyse and visualise OBD data.',
     tags: ['OBD-II', 'Data viz', 'Diagnostics'] },
@@ -212,7 +212,7 @@ export default function App() {
                 rel="noreferrer"
                 data-reveal
               >
-                <h3>{r.name}</h3>
+                <h3>{r.logo && <img className="job-logo" src={r.logo} alt="" />}{r.name}</h3>
                 <p>{r.desc}</p>
                 <div className="job-meta">
                   <div className="tags">

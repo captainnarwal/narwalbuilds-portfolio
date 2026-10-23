@@ -91,6 +91,8 @@ h1 span { color: var(--accent); }
 .job.featured h3 { font-size: clamp(34px, 5.6vw, 88px); line-height: 1; }
 .job.featured .tags span { background: rgba(11, 12, 14, .14); }
 .job.featured .job-arrow { color: #0b0c0e; }
+.job h3 { display: flex; align-items: center; gap: 12px; }
+.job-logo { width: 32px; height: 32px; border-radius: 8px; }
 .stars { color: var(--accent); }
 .parts-bin { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin-top: 40px; font-size: 18px; }
 .parts-bin > h3 { margin: 0; }
