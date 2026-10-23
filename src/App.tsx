@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { ArrowUpRight, Menu, X } from 'lucide-react'
@@ -7,6 +7,7 @@ import { posts } from './posts'
 const EMAIL = 'mailto:neerajnarwal2000@gmail.com'
 const GITHUB = 'https://github.com/captainnarwal'
 const LINKEDIN = 'https://linkedin.com/in/captainnarwal'
+const INSTAGRAM = 'https://instagram.com/narwalbuilds'
 
 const STACK = {
   Languages: ['Python', 'JavaScript', 'TypeScript', 'C/C++'],
@@ -46,7 +47,28 @@ export default function App() {
   const [selectedPost, setSelectedPost] = useState<string | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
 
+  const [closing, setClosing] = useState(false)
+
   const post = posts.find((item) => item.slug === selectedPost)
+
+  const closePost = () => {
+    setClosing(true)
+    setTimeout(() => {
+      setSelectedPost(null)
+      setClosing(false)
+    }, 250)
+  }
+
+  useEffect(() => {
+    if (!post) return
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && closePost()
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', onKey)
+    return () => {
+      document.body.style.overflow = ''
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [post])
 
   return (
     <div className="site-shell">
@@ -64,10 +86,10 @@ export default function App() {
         <nav className={menuOpen ? 'nav-links open' : 'nav-links'}>
           <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
           <a href="#projects" onClick={() => setMenuOpen(false)}>Projects</a>
-          <a href="#blog" onClick={() => {
-            setSelectedPost(null)
-            setMenuOpen(false)
-          }}>Blog</a>
+          <a href="#blog" onClick={() => setMenuOpen(false)}>Blog</a>
+          <a href={GITHUB} target="_blank" rel="noreferrer">GitHub ↗</a>
+          <a href={LINKEDIN} target="_blank" rel="noreferrer">LinkedIn ↗</a>
+          <a href={INSTAGRAM} target="_blank" rel="noreferrer">Instagram ↗</a>
           <a href={EMAIL}>Contact ↗</a>
         </nav>
       </header>
@@ -100,6 +122,7 @@ export default function App() {
           <div className="socials">
             <a href={GITHUB} target="_blank" rel="noreferrer">GitHub ↗</a>
             <a href={LINKEDIN} target="_blank" rel="noreferrer">LinkedIn ↗</a>
+            <a href={INSTAGRAM} target="_blank" rel="noreferrer">Instagram ↗</a>
           </div>
         </section>
 
@@ -166,40 +189,52 @@ export default function App() {
 
         <section id="blog" className="section">
           <div className="section-label">03 / SHOP NOTES</div>
-          <h2>{post ? post.title : 'Notes from the workshop.'}</h2>
+          <h2>Notes from the workshop.</h2>
 
-          {post ? (
-            <article className="post-content">
+          <div className="post-list">
+            {posts.map((item) => (
               <button
-                className="text-button"
-                onClick={() => setSelectedPost(null)}
+                className="post-row"
+                key={item.slug}
+                onClick={() => setSelectedPost(item.slug)}
               >
-                ← All articles
-              </button>
-              <p className="post-date">{post.date}</p>
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                {post.content}
-              </ReactMarkdown>
-            </article>
-          ) : (
-            <div className="post-list">
-              {posts.map((item) => (
-                <button
-                  className="post-row"
-                  key={item.slug}
-                  onClick={() => setSelectedPost(item.slug)}
-                >
-                  <span>
-                    <span className="post-date">{item.date}</span>
-                    <strong>{item.title}</strong>
-                    <span className="post-description">{item.description}</span>
+                <span>
+                  <span className="post-date">{item.date}</span>
+                  <strong>{item.title}</strong>
+                  <span className="post-description">{item.description}</span>
+                  <span className="tags">
+                    {item.tags.map((t) => <span key={t}>{t}</span>)}
                   </span>
-                  <ArrowUpRight />
+                </span>
+                <ArrowUpRight />
+              </button>
+            ))}
+            {posts.length === 0 && <p>New articles coming soon.</p>}
+          </div>
+
+          {post && (
+            <div
+              className={closing ? 'modal-backdrop closing' : 'modal-backdrop'}
+              onClick={closePost}
+            >
+              <article
+                className="modal"
+                role="dialog"
+                aria-modal="true"
+                aria-label={post.title}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button className="modal-close" onClick={closePost} aria-label="Close article">
+                  <X />
                 </button>
-              ))}
-              {posts.length === 0 && (
-                <p>New articles coming soon.</p>
-              )}
+                <p className="post-date">{post.date}</p>
+                <h2>{post.title}</h2>
+                <div className="post-content">
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {post.content}
+                  </ReactMarkdown>
+                </div>
+              </article>
             </div>
           )}
         </section>
