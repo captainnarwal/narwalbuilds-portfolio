@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { ArrowUpRight, Menu, X } from 'lucide-react'
@@ -43,11 +43,19 @@ const OLDER = [
   { name: 'royal-retro', url: 'https://github.com/captainnarwal/royal-retro' },
 ]
 
+const READOUT = [
+  ['Scan', 'Complete'],
+  ['Status', 'Taking work orders'],
+  ['Languages', 'Python, JavaScript, TypeScript'],
+  ['Focus', 'AI apps, backend, full-stack'],
+  ['Method', 'Find the fault, fix it, test it'],
+]
+
 export default function App() {
   const [selectedPost, setSelectedPost] = useState<string | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
-
   const [closing, setClosing] = useState(false)
+  const closeRef = useRef<HTMLButtonElement>(null)
 
   const post = posts.find((item) => item.slug === selectedPost)
 
@@ -63,12 +71,32 @@ export default function App() {
     if (!post) return
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && closePost()
     document.body.style.overflow = 'hidden'
+    closeRef.current?.focus()
     window.addEventListener('keydown', onKey)
     return () => {
       document.body.style.overflow = ''
       window.removeEventListener('keydown', onKey)
     }
   }, [post])
+
+  // Staggered entrance; content stays visible if script or IntersectionObserver is missing.
+  useEffect(() => {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const els = document.querySelectorAll<HTMLElement>('[data-reveal]')
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return
+        e.target.classList.add('in')
+        io.unobserve(e.target)
+      })
+    }, { threshold: 0.12 })
+    els.forEach((el, i) => {
+      el.classList.add('rv')
+      el.style.setProperty('--d', `${(i % 4) * 70}ms`)
+      io.observe(el)
+    })
+    return () => io.disconnect()
+  }, [])
 
   return (
     <div className="site-shell">
@@ -79,6 +107,7 @@ export default function App() {
           className="menu-button"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle navigation"
+          aria-expanded={menuOpen}
         >
           {menuOpen ? <X /> : <Menu />}
         </button>
@@ -87,61 +116,72 @@ export default function App() {
           <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
           <a href="#projects" onClick={() => setMenuOpen(false)}>Projects</a>
           <a href="#blog" onClick={() => setMenuOpen(false)}>Blog</a>
-          <a href={GITHUB} target="_blank" rel="noreferrer">GitHub ↗</a>
-          <a href={LINKEDIN} target="_blank" rel="noreferrer">LinkedIn ↗</a>
-          <a href={INSTAGRAM} target="_blank" rel="noreferrer">Instagram ↗</a>
           <a href={EMAIL}>Contact ↗</a>
         </nav>
       </header>
 
       <main id="home">
         <section className="hero">
-          <div className="eyebrow">
-            <span className="status-dot" /> GARAGE OPEN · TAKING WORK ORDERS
+          <div className="hero-text">
+            <h1>
+              I fix code
+              <br />
+              <span>and cars.</span>
+            </h1>
+
+            <p className="hero-copy">
+              Software developer by day, wrench-turner by habit. I build with
+              Python and JavaScript, and I diagnose bugs and vehicles the same
+              way: find the fault, fix it properly, test it.
+            </p>
+
+            <div className="hero-actions">
+              <a className="button primary" href="#projects">
+                Explore my work <ArrowUpRight size={18} />
+              </a>
+              <a className="button secondary" href="#blog">Read the blog</a>
+            </div>
+
+            <div className="socials">
+              <a href={GITHUB} target="_blank" rel="noreferrer">GitHub ↗</a>
+              <a href={LINKEDIN} target="_blank" rel="noreferrer">LinkedIn ↗</a>
+              <a href={INSTAGRAM} target="_blank" rel="noreferrer">Instagram ↗</a>
+            </div>
           </div>
 
-          <h1>
-            I fix code
-            <br />
-            <span>and cars.</span>
-          </h1>
-
-          <p className="hero-copy">
-            Software developer by day, wrench-turner by habit. I build with
-            Python and JavaScript, and I diagnose bugs and vehicles the same
-            way: find the fault, fix it properly, test it.
-          </p>
-
-          <div className="hero-actions">
-            <a className="button primary" href="#projects">
-              Explore my work <ArrowUpRight size={17} />
-            </a>
-            <a className="button secondary" href="#blog">Read the blog</a>
-          </div>
-
-          <div className="socials">
-            <a href={GITHUB} target="_blank" rel="noreferrer">GitHub ↗</a>
-            <a href={LINKEDIN} target="_blank" rel="noreferrer">LinkedIn ↗</a>
-            <a href={INSTAGRAM} target="_blank" rel="noreferrer">Instagram ↗</a>
+          <div className="readout" data-ui aria-label="Diagnostic readout summarising Neeraj">
+            <div className="readout-head">
+              <span>OBD-II scan</span>
+              <span className="readout-ok">No faults found</span>
+            </div>
+            <dl>
+              {READOUT.map(([k, v]) => (
+                <div key={k}>
+                  <dt>{k}</dt>
+                  <dd>{v}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </section>
 
-        <section id="about" className="section">
-          <div className="section-label">01 / ABOUT</div>
-          <h2>Diagnose. Tear down. Rebuild.</h2>
-          <p className="section-copy">
-            Whether it's a backend that won't start or a car that throws a
-            check-engine light, I like getting hands-on, working out what's
-            really wrong, and fixing it for good. Currently focused on AI
-            applications, backend development, full-stack projects, and
-            system design.
-          </p>
+        <section id="about" className="section about">
+          <div data-reveal>
+            <h2>Diagnose. Tear down. Rebuild.</h2>
+            <p className="section-copy">
+              Whether it's a backend that won't start or a car that throws a
+              check-engine light, I like getting hands-on, working out what's
+              really wrong, and fixing it for good. Currently focused on AI
+              applications, backend development, full-stack projects, and
+              system design.
+            </p>
+          </div>
 
-          <div className="section-label toolbox-label">TOOLBOX</div>
-          <div className="stack">
+          <div className="stack" data-reveal>
+            <h3>Toolbox</h3>
             {Object.entries(STACK).map(([group, items]) => (
-              <div key={group}>
-                <span className="project-number">{group.toUpperCase()}</span>
+              <div key={group} className="stack-row">
+                <h4>{group}</h4>
                 <div className="tags">
                   {items.map((item) => <span key={item}>{item}</span>)}
                 </div>
@@ -151,33 +191,33 @@ export default function App() {
         </section>
 
         <section id="projects" className="section">
-          <div className="section-label">02 / WORK ORDERS</div>
-          <h2>Things I've been building.</h2>
+          <h2 data-reveal>Things I've been building.</h2>
 
-          <div className="project-grid">
+          <div className="jobs">
             {FEATURED.map((r, i) => (
               <a
-                className="project-card"
+                className={i === 0 ? 'job featured' : 'job'}
                 key={r.name}
                 href={r.url}
                 target="_blank"
                 rel="noreferrer"
+                data-reveal
               >
-                <span className="project-number">
-                  JOB / {String(i + 1).padStart(2, '0')}
-                  {r.stars > 0 && <span className="stars"> · ★ {r.stars}</span>}
-                </span>
-                <h3>{r.name} <ArrowUpRight size={20} /></h3>
+                <h3>{r.name}</h3>
                 <p>{r.desc}</p>
-                <div className="tags">
-                  {r.tags.map((t) => <span key={t}>{t}</span>)}
+                <div className="job-meta">
+                  <div className="tags">
+                    {r.tags.map((t) => <span key={t}>{t}</span>)}
+                    {r.stars > 0 && <span className="stars">{r.stars} {r.stars === 1 ? "star" : "stars"}</span>}
+                  </div>
+                  <span className="job-arrow">View ↗</span>
                 </div>
               </a>
             ))}
           </div>
 
-          <div className="parts-bin">
-            <span className="project-number">PARTS BIN</span>
+          <div className="parts-bin" data-reveal>
+            <h3>Parts bin</h3>
             {OLDER.map((r) => (
               <a key={r.name} href={r.url} target="_blank" rel="noreferrer">{r.name} ↗</a>
             ))}
@@ -187,9 +227,8 @@ export default function App() {
           </div>
         </section>
 
-        <section id="blog" className="section">
-          <div className="section-label">03 / SHOP NOTES</div>
-          <h2>Notes from the workshop.</h2>
+        <section id="blog" className="section blog">
+          <h2 data-reveal>Notes from the workshop.</h2>
 
           <div className="post-list">
             {posts.map((item) => (
@@ -197,6 +236,7 @@ export default function App() {
                 className="post-row"
                 key={item.slug}
                 onClick={() => setSelectedPost(item.slug)}
+                data-reveal
               >
                 <span>
                   <span className="post-date">{item.date}</span>
@@ -224,7 +264,7 @@ export default function App() {
                 aria-label={post.title}
                 onClick={(e) => e.stopPropagation()}
               >
-                <button className="modal-close" onClick={closePost} aria-label="Close article">
+                <button ref={closeRef} className="modal-close" onClick={closePost} aria-label="Close article">
                   <X />
                 </button>
                 <p className="post-date">{post.date}</p>
@@ -239,18 +279,20 @@ export default function App() {
           )}
         </section>
 
-        <section className="contact">
-          <div className="section-label">04 / BOOK A SLOT</div>
+        <section className="contact" id="contact">
           <h2>Have an interesting idea?</h2>
-          <a className="button primary" href={EMAIL}>
-            Let's talk <ArrowUpRight size={17} />
+          <a className="button dark" href={EMAIL}>
+            Let's talk <ArrowUpRight size={18} />
           </a>
         </section>
       </main>
 
       <footer>
-        <span>© {new Date().getFullYear()} Neeraj Narwal</span>
-        <a href="#home">Back to top ↑</a>
+        <p className="footer-name">Neeraj Narwal</p>
+        <div className="footer-row">
+          <span>© {new Date().getFullYear()} Neeraj Narwal</span>
+          <a href="#home">Back to top ↑</a>
+        </div>
       </footer>
     </div>
   )
