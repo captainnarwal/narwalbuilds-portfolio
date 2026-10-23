@@ -16,6 +16,32 @@ const STACK = {
   Tools: ['Git', 'GitHub', 'Docker', 'Linux', 'VS Code', 'Postman'],
 }
 
+const FEATURED = [
+  { name: 'WheelStop', url: 'https://wheelstop.in', stars: 0,
+    desc: 'A searchable marketplace for alloy wheel buyers and sellers in India, with filters for fitment, size, PCD, offset, and brand.',
+    tags: ['React', 'FastAPI', 'PostgreSQL'] },
+  { name: 'OBD Analyzer', url: 'https://github.com/captainnarwal/OBD-Anlayzer', stars: 1,
+    desc: 'Plug in, read the codes, see what the car is telling you. A simple app to analyse and visualise OBD data.',
+    tags: ['OBD-II', 'Data viz', 'Diagnostics'] },
+  { name: 'Kali-MCP', url: 'https://github.com/captainnarwal/Kali-MCP', stars: 2,
+    desc: 'AI-driven Kali pentesting over MCP: a Streamable HTTP server plus an LLM agent client driving nmap, gobuster, nikto, sqlmap and more.',
+    tags: ['Python', 'MCP', 'Pentesting'] },
+  { name: 'pptx2img', url: 'https://github.com/captainnarwal/pptx2img', stars: 5,
+    desc: 'Open-source Python library that converts PowerPoint slides into images.',
+    tags: ['Python', 'Open source'] },
+  { name: 'LAIVS', url: 'https://github.com/captainnarwal/LAIVS', stars: 1,
+    desc: 'Local AI Video Studio: AI video tooling that runs on your own machine.',
+    tags: ['TypeScript', 'Local AI'] },
+  { name: 'narwalbuilds', url: 'https://github.com/captainnarwal/narwalbuilds', stars: 1,
+    desc: 'The main workshop repo for my builds and experiments.',
+    tags: ['Builds'] },
+]
+
+const OLDER = [
+  { name: 'flappyfish', url: 'https://gregarious-eclair-d7ffb8.netlify.app/' },
+  { name: 'royal-retro', url: 'https://github.com/captainnarwal/royal-retro' },
+]
+
 export default function App() {
   const [selectedPost, setSelectedPost] = useState<string | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -49,18 +75,19 @@ export default function App() {
       <main id="home">
         <section className="hero">
           <div className="eyebrow">
-            <span className="status-dot" /> AVAILABLE FOR INTERESTING PROJECTS
+            <span className="status-dot" /> GARAGE OPEN · TAKING WORK ORDERS
           </div>
 
           <h1>
-            Building things
+            I fix code
             <br />
-            <span>that matter.</span>
+            <span>and cars.</span>
           </h1>
 
           <p className="hero-copy">
-            Software developer building applications with Python and
-            JavaScript, with a focus on AI, backend systems, and automation.
+            Software developer by day, wrench-turner by habit. I build with
+            Python and JavaScript, and I diagnose bugs and vehicles the same
+            way: find the fault, fix it properly, test it.
           </p>
 
           <div className="hero-actions">
@@ -78,15 +105,16 @@ export default function App() {
 
         <section id="about" className="section">
           <div className="section-label">01 / ABOUT</div>
-          <h2>Curiosity meets engineering.</h2>
+          <h2>Diagnose. Tear down. Rebuild.</h2>
           <p className="section-copy">
-            I enjoy taking ideas from concept to implementation:
-            designing systems, writing code, solving practical problems,
-            and documenting what I learn along the way. Currently focused on
-            AI applications, backend development, full-stack projects, and
+            Whether it's a backend that won't start or a car that throws a
+            check-engine light, I like getting hands-on, working out what's
+            really wrong, and fixing it for good. Currently focused on AI
+            applications, backend development, full-stack projects, and
             system design.
           </p>
 
+          <div className="section-label toolbox-label">TOOLBOX</div>
           <div className="stack">
             {Object.entries(STACK).map(([group, items]) => (
               <div key={group}>
@@ -100,40 +128,44 @@ export default function App() {
         </section>
 
         <section id="projects" className="section">
-          <div className="section-label">02 / SELECTED WORK</div>
+          <div className="section-label">02 / WORK ORDERS</div>
           <h2>Things I've been building.</h2>
 
           <div className="project-grid">
-            <a
-              className="project-card"
-              href="https://wheelstop.in"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <span className="project-number">PROJECT / 01</span>
-              <h3>WheelStop <ArrowUpRight size={20} /></h3>
-              <p>
-                A searchable marketplace for alloy wheel buyers and sellers in
-                India, with filters for fitment, size, PCD, offset, and brand.
-              </p>
-              <div className="tags">
-                <span>React</span><span>FastAPI</span><span>PostgreSQL</span>
-              </div>
-            </a>
+            {FEATURED.map((r, i) => (
+              <a
+                className="project-card"
+                key={r.name}
+                href={r.url}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span className="project-number">
+                  JOB / {String(i + 1).padStart(2, '0')}
+                  {r.stars > 0 && <span className="stars"> · ★ {r.stars}</span>}
+                </span>
+                <h3>{r.name} <ArrowUpRight size={20} /></h3>
+                <p>{r.desc}</p>
+                <div className="tags">
+                  {r.tags.map((t) => <span key={t}>{t}</span>)}
+                </div>
+              </a>
+            ))}
+          </div>
 
-            <article className="project-card">
-              <span className="project-number">PROJECT / 02</span>
-              <h3>Engineering Lab</h3>
-              <p>Experiments in embedded systems, automotive electronics, and automation.</p>
-              <div className="tags">
-                <span>Python</span><span>Embedded</span><span>Electronics</span>
-              </div>
-            </article>
+          <div className="parts-bin">
+            <span className="project-number">PARTS BIN</span>
+            {OLDER.map((r) => (
+              <a key={r.name} href={r.url} target="_blank" rel="noreferrer">{r.name} ↗</a>
+            ))}
+            <a href={`${GITHUB}?tab=repositories`} target="_blank" rel="noreferrer">
+              All repos on GitHub ↗
+            </a>
           </div>
         </section>
 
         <section id="blog" className="section">
-          <div className="section-label">03 / WRITING</div>
+          <div className="section-label">03 / SHOP NOTES</div>
           <h2>{post ? post.title : 'Notes from the workshop.'}</h2>
 
           {post ? (
@@ -173,7 +205,7 @@ export default function App() {
         </section>
 
         <section className="contact">
-          <div className="section-label">04 / GET IN TOUCH</div>
+          <div className="section-label">04 / BOOK A SLOT</div>
           <h2>Have an interesting idea?</h2>
           <a className="button primary" href={EMAIL}>
             Let's talk <ArrowUpRight size={17} />

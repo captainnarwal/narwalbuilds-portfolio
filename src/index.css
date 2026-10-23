@@ -9,7 +9,7 @@
   scroll-behavior: smooth;
   --muted: #92959e;
   --line: #292b30;
-  --accent: #b9f36a;
+  --accent: #ff9f1c;
 }
 
 * { box-sizing: border-box; }
@@ -93,3 +93,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
   .contact { padding: 56px 0; }
   .button { padding: 14px 18px; }
 }
+
+.toolbox-label { margin-top: 36px; }
+.stars { color: var(--accent); }
+.parts-bin { display: flex; flex-wrap: wrap; align-items: center; gap: 20px; margin-top: 28px; color: var(--muted); font-size: 13px; }
+.parts-bin a:hover { color: var(--accent); }
